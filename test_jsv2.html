@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Prayers from the Quran - Interactive List</title>
+  <style>
+    body { font-family: 'Segoe UI', Roboto, Arial, sans-serif; margin: 24px; color: #111; line-height: 1.6; background-color: #fcfcfc; }
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    /* Search Bar & Clear Button Container */
+    .search-wrapper { 
+      position: sticky; 
+      top: 10px; 
+      z-index: 100; 
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      background: white;
+      border: 2px solid #007bff;
+      border-radius: 30px;
+      padding: 5px 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    
+    #filterInput {
+      flex: 1;
+      border: none;
+      padding: 10px 0;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    #clearBtn {
+      background: #eee;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      display: none; /* Hidden by default */
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #666;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+
+    #clearBtn:hover { background: #ddd; color: #333; }
+
+    /* Table Styling */
+    table { border-collapse: collapse; width: 100%; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    th, td { padding: 12px 16px; border: 1px solid #eee; text-align: left; }
+    th { background: #f8f9fa; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+    
+    /* Collapsible Styling */
+    details { cursor: pointer; }
+    summary { font-weight: 500; color: #0056b3; outline: none; display: flex; justify-content: space-between; align-items: center; }
+    summary::after { content: '▼'; font-size: 0.7rem; color: #999; }
+    details[open] summary::after { content: '▲'; }
+    
+    .details-content { padding: 15px; margin-top: 10px; background: #f0f7ff; border-radius: 6px; border-left: 4px solid #007bff; }
+    .quran-link { display: inline-block; margin-top: 10px; color: #28a745; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
+
+    .highlight-row { background-color: #e8f4f8; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Prayers from the Quran</h1>
+  <p>Search by Prophet, keyword, or reference number. Click a row to see links.</p>
+
+  <div class="search-wrapper">
+    <input type="text" id="filterInput" placeholder="🔍 Search prayers...">
+    <button id="clearBtn" title="Clear search">✕</button>
+  </div>
+
+  <table id="prayerTable">
+    <thead>
+      <tr>
+        <th style="width: 15%;">Ref</th>
+        <th>Prayer Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>2:250</td><td><details><summary>Prayer of King Saul and his Companions</summary><div class="details-content"><a class="quran-link" href="https://quran.com/2/250" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>2:260</td><td><details><summary>Prayer of Ibrāhīm(Abraham) عليه السلام #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/2/260" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>2:285</td><td><details><summary>Prayer of Believers #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/2/285" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>2:286</td><td><details><summary>Prayer of Believers #2</summary><div class="details-content"><a class="quran-link" href="https://quran.com/2/286" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>3:16</td><td><details><summary>Prayer of Believers #3</summary><div class="details-content"><a class="quran-link" href="https://quran.com/3/16" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>3:35</td><td><details><summary>Prayer of Hana - Wife of ʿImrān(Amram) #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/3/35" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>3:36</td><td><details><summary>Prayer of Hana - Wife of ʿImrān(Amram) #2</summary><div class="details-content"><a class="quran-link" href="https://quran.com/3/36" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>3:38</td><td><details><summary>Prayer of Zakariyyā(Zachariah) #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/3/38" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>3:147</td><td><details><summary>Prayer of Believers #4</summary><div class="details-content"><a class="quran-link" href="https://quran.com/3/147" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>3:191-194</td><td><details><summary>Prayer of Rightous #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/3/191-194" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>4:75</td><td><details><summary>Prayer of the Oppresssed #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/4/75" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>5:25</td><td><details><summary>Prayer of Musa(Moses) #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/5/25" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>5:83-84</td><td><details><summary>Prayer of Christians #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/5/83-84" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>5:114</td><td><details><summary>Prayer of Yesa(Jesus) #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/5/114" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>7:47</td><td><details><summary>Prayer of People in Heareafter</summary><div class="details-content"><a class="quran-link" href="https://quran.com/7/47" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>10:85-86</td><td><details><summary>Prayer of Israelites</summary><div class="details-content"><a class="quran-link" href="https://quran.com/10/85-86" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>10:88</td><td><details><summary>Prayer of Musa(Moses) #2</summary><div class="details-content"><a class="quran-link" href="https://quran.com/10/88" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>11:45</td><td><details><summary>Prayer of Nūḥ(Noah) #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/11/45" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>11:47</td><td><details><summary>Prayer of Nūḥ(Noah) #2</summary><div class="details-content"><a class="quran-link" href="https://quran.com/11/47" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>12:33</td><td><details><summary>Prayer of Yūsuf(Joseph) #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/12/33" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>12:101</td><td><details><summary>Prayer of Yūsuf(Joseph) #2</summary><div class="details-content"><a class="quran-link" href="https://quran.com/12/101" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>14:35-41</td><td><details><summary>Prayer of Ibrāhīm(Abraham) #2</summary><div class="details-content"><a class="quran-link" href="https://quran.com/14/35-41" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>17:24</td><td><details><summary>Prayer for Parents</summary><div class="details-content"><a class="quran-link" href="https://quran.com/17/24" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>18:10</td><td><details><summary>Prayer of Youth/People of the Cave</summary><div class="details-content"><a class="quran-link" href="https://quran.com/18/10" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>19:4-6</td><td><details><summary>Prayer of Zakariyyā(Zachariah) #2</summary><div class="details-content"><a class="quran-link" href="https://quran.com/19/4-6" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>20:25-35</td><td><details><summary>Prayer of Musa(Moses) #3</summary><div class="details-content"><a class="quran-link" href="https://quran.com/20/25-35" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>20:114</td><td><details><summary>Prayer for Knowledge</summary><div class="details-content"><a class="quran-link" href="https://quran.com/20/114" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>21:83</td><td><details><summary>Prayer of Ayyūb(Job) #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/21/83" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>21:87</td><td><details><summary>Prayer of Yūnus(Jonah)</summary><div class="details-content"><a class="quran-link" href="https://quran.com/21/87" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>21:89</td><td><details><summary>Prayer of Zakariyyā(Zachariah) #3</summary><div class="details-content"><a class="quran-link" href="https://quran.com/21/89" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>21:112</td><td><details><summary>Prayer of Muhammed ﷺ</summary><div class="details-content"><a class="quran-link" href="https://quran.com/21/112" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>23:26</td><td><details><summary>Prayer of Nūḥ(Noah) #3</summary><div class="details-content"><a class="quran-link" href="https://quran.com/23/26" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>23:28</td><td><details><summary>Prayer for Thanks after rescue</summary><div class="details-content"><a class="quran-link" href="https://quran.com/23/28" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>23:29</td><td><details><summary>Prayer for Safe Journey</summary><div class="details-content"><a class="quran-link" href="https://quran.com/23/29" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>23:39</td><td><details><summary>Prayer of Nūḥ(Noah) #4</summary><div class="details-content"><a class="quran-link" href="https://quran.com/23/39" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>23:93-94</td><td><details><summary>Prayer taught to Muhammed ﷺ</summary><div class="details-content"><a class="quran-link" href="https://quran.com/23/93-94" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>23:97-98</td><td><details><summary>Prayer taught to Muhammed ﷺ</summary><div class="details-content"><a class="quran-link" href="https://quran.com/23/97-98" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>23:118</td><td><details><summary>Prayer taught to Muhammed ﷺ</summary><div class="details-content"><a class="quran-link" href="https://quran.com/23/118" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>25:65-66</td><td><details><summary>Prayer of Servants of the Most Merciful #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/25/65-66" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>25:74</td><td><details><summary>Prayer of Servants of the Most Merciful #2</summary><div class="details-content"><a class="quran-link" href="https://quran.com/25/74" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>26:83-89</td><td><details><summary>Prayer of Ibrāhīm(Abraham) #3</summary><div class="details-content"><a class="quran-link" href="https://quran.com/26/83-89" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>26:117-118</td><td><details><summary>Prayer of Nūḥ(Noah) #4</summary><div class="details-content"><a class="quran-link" href="https://quran.com/26/117-118" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>26:168-169</td><td><details><summary>Prayer of Lūṭ(Lot) #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/26/168-169" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>27:19</td><td><details><summary>Prayer of Sulaymān(Solomon) #1</summary><div class="details-content"><a class="quran-link" href="https://quran.com/27/19" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>27:44</td><td><details><summary>Prayer of Bilqīs - Queen of Sheba</summary><div class="details-content"><a class="quran-link" href="https://quran.com/27/44" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>28:16</td><td><details><summary>Prayer of Musa(Moses) #4</summary><div class="details-content"><a class="quran-link" href="https://quran.com/28/16" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>28:17</td><td><details><summary>Prayer of Musa(Moses) #5</summary><div class="details-content"><a class="quran-link" href="https://quran.com/28/17" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>28:21</td><td><details><summary>Prayer of Musa(Moses) #6</summary><div class="details-content"><a class="quran-link" href="https://quran.com/28/21" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>28:24</td><td><details><summary>Prayer of Musa(Moses) #7</summary><div class="details-content"><a class="quran-link" href="https://quran.com/28/24" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>28:33-34</td><td><details><summary>Prayer of Musa(Moses) #8</summary><div class="details-content"><a class="quran-link" href="https://quran.com/28/33-34" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>29:30</td><td><details><summary>Prayer of Lūṭ(Lot) #2</summary><div class="details-content"><a class="quran-link" href="https://quran.com/29/30" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>37:100</td><td><details><summary>Prayer of Ibrāhīm(Abraham) #4</summary><div class="details-content"><a class="quran-link" href="https://quran.com/37/100" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>38:35</td><td><details><summary>Prayer of Sulaymān(Solomon) #2</summary><div class="details-content"><a class="quran-link" href="https://quran.com/38/35" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>40:7-9</td><td><details><summary>Prayer of the Angels</summary><div class="details-content"><a class="quran-link" href="https://quran.com/40/7-9" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>40:65</td><td><details><summary>Prayer for Showing Gratitude</summary><div class="details-content"><a class="quran-link" href="https://quran.com/40/65" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>46:15</td><td><details><summary>Prayer upon Reaching The Age of 40</summary><div class="details-content"><a class="quran-link" href="https://quran.com/46/15" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>54:10</td><td><details><summary>Prayer of Nūḥ(Noah) #5</summary><div class="details-content"><a class="quran-link" href="https://quran.com/54/10" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>59:10</td><td><details><summary>Prayer of al-Anṣār</summary><div class="details-content"><a class="quran-link" href="https://quran.com/59/10" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>60:4</td><td><details><summary>Prayer of Believers #4</summary><div class="details-content"><a class="quran-link" href="https://quran.com/60/4" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>66:8</td><td><details><summary>Prayer of Believers #5</summary><div class="details-content"><a class="quran-link" href="https://quran.com/66/8" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>66:11</td><td><details><summary>Prayer of Āsiyah - Wife of Pharoh</summary><div class="details-content"><a class="quran-link" href="https://quran.com/66/11" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>71:24</td><td><details><summary>Prayer of Nūḥ(Noah) #6</summary><div class="details-content"><a class="quran-link" href="https://quran.com/71/24" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>71:26-28</td><td><details><summary>Prayer of Nūḥ(Noah) #7</summary><div class="details-content"><a class="quran-link" href="https://quran.com/71/26-28" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+    </tbody>
+  </table>
+
+  <footer style="margin-top:32px;padding-top:16px;border-top:1px solid #ddd;font-size:0.9rem;color:#666">
+    <p>Compiled by R Abdul Rahman & Family</p>
+  </footer>
+</div>
+
+<script>
+  const filterInput = document.getElementById('filterInput');
+  const clearBtn = document.getElementById('clearBtn');
+  const rows = document.querySelectorAll('#prayerTable tbody tr');
+
+  function runFilter() {
+    const query = filterInput.value.toLowerCase().trim();
+    
+    // Show/Hide Clear Button
+    clearBtn.style.display = query.length > 0 ? 'flex' : 'none';
+
+    rows.forEach(row => {
+      const ref = row.cells[0].textContent.toLowerCase();
+      const desc = row.cells[1].textContent.toLowerCase();
+      
+      if (ref.includes(query) || desc.includes(query)) {
+        row.classList.remove('hidden');
+      } else {
+        row.classList.add('hidden');
+      }
+    });
+  }
+
+  // Clear function
+  clearBtn.addEventListener('click', () => {
+    filterInput.value = '';
+    runFilter();
+    filterInput.focus();
+  });
+
+  filterInput.addEventListener('input', runFilter);
+</script>
+
+</body>
+</html>

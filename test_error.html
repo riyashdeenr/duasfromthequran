@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Prayers from the Quran - Interactive List</title>
+  <style>
+    body { font-family: 'Segoe UI', Roboto, Arial, sans-serif; margin: 24px; color: #111; line-height: 1.6; background-color: #fcfcfc; }
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    .search-wrapper { 
+      position: sticky; 
+      top: 10px; 
+      z-index: 100; 
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      background: white;
+      border: 2px solid #007bff;
+      border-radius: 30px;
+      padding: 5px 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    
+    #filterInput { flex: 1; border: none; padding: 10px 0; font-size: 1rem; outline: none; }
+    #clearBtn { background: #eee; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 14px; color: #666; font-weight: bold; margin-left: 10px; }
+    #clearBtn:hover { background: #ddd; color: #333; }
+
+    table { border-collapse: collapse; width: 100%; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    th, td { padding: 12px 16px; border: 1px solid #eee; text-align: left; }
+    th { background: #f8f9fa; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+    
+    details { cursor: pointer; }
+    summary { font-weight: 600; color: #0056b3; outline: none; display: flex; justify-content: space-between; align-items: center; }
+    summary::after { content: '▼'; font-size: 0.7rem; color: #999; }
+    details[open] summary::after { content: '▲'; }
+    
+    .details-content { padding: 15px; margin-top: 10px; background: #f8fbff; border-radius: 6px; border-left: 4px solid #007bff; }
+    .arabic { font-size: 1.4rem; font-family: "Amiri", "Traditional Arabic", serif; text-align: right; dir: rtl; margin-bottom: 10px; display: block; color: #222; }
+    .translation { font-style: italic; color: #444; display: block; margin-bottom: 10px; }
+    .quran-link { display: inline-block; color: #28a745; text-decoration: none; font-weight: bold; font-size: 0.85rem; }
+
+    .highlight-row { background-color: #e8f4f8; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Prayers from the Quran</h1>
+  <p>Search by Prophet, keyword, or reference. Click rows to view Arabic text and translations.</p>
+
+  <div class="search-wrapper">
+    <input type="text" id="filterInput" placeholder="🔍 Search prayers...">
+    <button id="clearBtn" title="Clear search">✕</button>
+  </div>
+
+  <table id="prayerTable">
+    <thead>
+      <tr>
+        <th style="width: 15%;">Ref</th>
+        <th>Prayer Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2:250</td>
+        <td>
+          <details>
+            <summary>Prayer of King Saul and his Companions</summary>
+            <div class="details-content">
+              <span class="arabic" dir="rtl">رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَثَبِّتْ أَقْدَامَنَا وَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ</span>
+              <span class="translation">"Our Lord, pour upon us patience and plant firmly our feet and give us victory over the disbelieving people."</span>
+              <a class="quran-link" href="https://quran.com/2/250" target="_blank">View on Quran.com →</a>
+            </div>
+          </details>
+        </td>
+      </tr>
+      <tr>
+        <td>2:285</td>
+        <td>
+          <details>
+            <summary>Prayer of Believers #1</summary>
+            <div class="details-content">
+              <span class="arabic" dir="rtl">غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ</span>
+              <span class="translation">"[We seek] Your forgiveness, our Lord, and to You is the [final] destination."</span>
+              <a class="quran-link" href="https://quran.com/2/285" target="_blank">View on Quran.com →</a>
+            </div>
+          </details>
+        </td>
+      </tr>
+      <tr>
+        <td>2:286</td>
+        <td>
+          <details>
+            <summary>Prayer of Believers #2</summary>
+            <div class="details-content">
+              <span class="arabic" dir="rtl">رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِن قَبْلِنَا ۚ رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ ۖ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا ۚ أَنتَ مَوْلَانَا فَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ</span>
+              <span class="translation">"Our Lord, do not impose blame upon us if we have forgotten or erred

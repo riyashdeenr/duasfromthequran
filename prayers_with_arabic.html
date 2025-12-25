@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Prayers from the Quran</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #fcfcfc;
+      --text-color: #111;
+      --container-bg: #ffffff;
+      --primary-color: #007bff;
+      --primary-color-darker: #0056b3;
+      --border-color: #eee;
+      --table-header-bg: #f8f9fa;
+      --details-bg: #f0f7ff;
+      --highlight-row-bg: #e8f4f8;
+      --link-color: #28a745;
+      --subtle-text-color: #555;
+      --shadow-color: rgba(0,0,0,0.1);
+      --button-bg: #eee;
+      --button-text: #666;
+      --button-hover-bg: #ddd;
+      --button-hover-text: #333;
+      --highlight-color: #fffab3;
+      --slider-bg: #ccc;
+      --slider-icon: '☀️';
+    }
+
+    body.dark-mode {
+      --bg-color: #1a1a1a;
+      --text-color: #f0f0f0;
+      --container-bg: #2a2a2a;
+      --primary-color: #4da6ff;
+      --primary-color-darker: #1a75ff;
+      --border-color: #444;
+      --table-header-bg: #333;
+      --details-bg: #2c3e50;
+      --highlight-row-bg: #34495e;
+      --link-color: #2ecc71;
+      --subtle-text-color: #bbb;
+      --shadow-color: rgba(0,0,0,0.4);
+      --button-bg: #555;
+      --button-text: #f0f0f0;
+      --button-hover-bg: #666;
+      --button-hover-text: #ffffff;
+      --highlight-color: #7f7d58;
+      --slider-bg: #555;
+      --slider-icon: '🌙';
+    }
+
+    body { 
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif; 
+      margin: 24px; 
+      color: var(--text-color); 
+      line-height: 1.6; 
+      background-color: var(--bg-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    .header-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .theme-switch-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    .theme-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
+    }
+
+    .theme-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--slider-bg);
+      transition: .4s;
+      border-radius: 26px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    .slider:after {
+      content: var(--slider-icon);
+      position: absolute;
+      font-size: 12px;
+      left: 6px;
+      top: 5px;
+      transition: .4s;
+    }
+
+    body.dark-mode .slider:after {
+      left: 28px;
+    }
+
+    input:checked + .slider {
+      background-color: var(--primary-color);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    /* Search Bar & Clear Button Container */
+    .search-wrapper { 
+      position: sticky; 
+      top: 10px; 
+      z-index: 100; 
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      background: var(--container-bg);
+      border: 2px solid var(--primary-color);
+      border-radius: 30px;
+      padding: 5px 20px;
+      box-shadow: 0 4px 10px var(--shadow-color);
+    }
+    
+    #filterInput {
+      flex: 1;
+      border: none;
+      padding: 10px 0;
+      font-size: 1rem;
+      outline: none;
+      background-color: transparent;
+      color: var(--text-color);
+    }
+    
+    #filterInput::placeholder {
+      color: var(--subtle-text-color);
+    }
+
+    #clearBtn {
+      background: var(--button-bg);
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      display: none; /* Hidden by default */
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--button-text);
+      font-weight: bold;
+      margin-left: 10px;
+    }
+
+    #clearBtn:hover { background: var(--button-hover-bg); color: var(--button-hover-text); }
+
+    /* Table Styling */
+    table { border-collapse: collapse; width: 100%; background: var(--container-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px var(--shadow-color); }
+    th, td { padding: 12px 16px; border: 1px solid var(--border-color); text-align: left; }
+    th { background: var(--table-header-bg); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+    
+    /* Collapsible Styling */
+    details { cursor: pointer; }
+    summary { font-weight: 500; color: var(--primary-color-darker); outline: none; display: flex; justify-content: space-between; align-items: center; }
+    summary::after { content: '▼'; font-size: 0.7rem; color: #999; }
+    details[open] summary::after { content: '▲'; }
+    
+    .details-content { padding: 15px; margin-top: 10px; background: var(--details-bg); border-radius: 6px; border-left: 4px solid var(--primary-color); }
+    .quran-link { display: inline-block; margin-top: 10px; color: var(--link-color); text-decoration: none; font-weight: bold; font-size: 0.9rem; }
+    .arabic { 
+        display: block; 
+        text-align: right; 
+        font-family: 'Noto Naskh Arabic', 'Amiri', serif; 
+        font-size: 1.6rem; 
+        margin-bottom: 12px;
+        line-height: 2.5rem;
+    }
+    .arabic strong {
+      font-weight: 700; /* Bolder weight */
+    }
+    .arabic .highlight {
+      background-color: var(--highlight-color);
+      border-radius: 3px;
+      padding: 0 4px;
+    }
+    .translation { 
+        display: block; 
+        font-style: italic; 
+        color: var(--subtle-text-color); 
+        margin-bottom: 12px;
+    }
+
+    .highlight-row { background-color: var(--highlight-row-bg); }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header-wrapper">
+    <h1>Prayers from the Quran</h1>
+    <div class="theme-switch-wrapper">
+      <label class="theme-switch" for="themeToggle">
+        <input type="checkbox" id="themeToggle" />
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+  <p>Search by Prophet, keyword, or reference number. Click a row to see links.</p>
+
+  <div class="search-wrapper">
+    <input type="text" id="filterInput" placeholder="🔍 Search prayers...">
+    <button id="clearBtn" title="Clear search">✕</button>
+  </div>
+
+  <table id="prayerTable">
+    <thead>
+      <tr>
+        <th style="width: 15%;">Ref</th>
+        <th>Prayer Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>2:250</td><td><details><summary>Prayer of King Saul and his Companions</summary><div class="details-content"><span class="arabic" dir="rtl">وَلَمَّا بَرَزُوا۟ لِجَالُوتَ وَجُنُودِهِۦ قَالُوا۟ <span class="highlight">رَبَّنَآ أَفْرِغْ عَلَيْنَا صَبْرًۭا وَثَبِّتْ أَقْدَامَنَا وَٱنصُرْنَا عَلَى ٱلْقَوْمِ ٱلْكَـٰفِرِينَ</span></span><span class="translation">When they advanced to face Goliath and his warriors, they prayed, “Our Lord! Shower us with perseverance, make our steps firm, and give us victory over the disbelieving people.”</span><a class="quran-link" href="https://quran.com/2/250" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>2:260</td><td><details><summary>Prayer of Ibrāhīm(Abraham) عليه السلام #1</summary><div class="details-content"><span class="arabic" dir="rtl">وإذ قال إبراهيم رب أرني كيف تحيي الموتى ۖ قال أولم تؤمن ۖ قال بلى ولكن ليطمئن قلبي ۖ قال فخذ أربعة من الطير فصرهن إليك ثم اجعل على كل جبل منهن جزءا ثم ادعهن يأتينك سعيا ۚ واعلم أن الله عزيز حكيم</span><span class="translation">And ˹remember˺ when Abraham said, "My Lord! Show me how you give life to the dead." Allah responded, "Do you not believe?" Abraham replied, "Yes I do, but just so my heart can be reassured." Allah said, "Then bring four birds, train them to come to you, ˹then cut them into pieces,˺ and scatter them on different hilltops. Then call them back, they will fly to you in haste. And ˹so you will˺ know that Allah is Almighty, All-Wise."</span><a class="quran-link" href="https://quran.com/2/260" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>2:285</td><td><details><summary>Prayer of Believers #1</summary><div class="details-content"><span class="arabic" dir="rtl">آمن الرسول بما أنزل إليه من ربه والمؤمنون ۚ كل آمن بالله وملائكته وكتبه ورسله لا نفرق بين أحد من رسله ۚ وقالوا سمعنا وأطعنا ۖ غفرانك ربنا وإليك المصير</span><span class="translation">The Messenger ˹firmly˺ believes in what has been revealed to him from his Lord, and so do the believers. They ˹all˺ believe in Allah, His angels, His Books, and His messengers. ˹They proclaim,˺ “We make no distinction between any of His messengers.” And they say, “We hear and obey. ˹We seek˺ Your forgiveness, our Lord! And to You ˹alone˺ is the final return.”</span><a class="quran-link" href="https://quran.com/2/285" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>2:286</td><td><details><summary>Prayer of Believers #2</summary><div class="details-content"><span class="arabic" dir="rtl">لا يكلف الله نفسا إلا وسعها ۚ لها ما كسبت وعليها ما اكتسبت ۗ ربنا لا تؤاخذنا إن نسينا أو أخطأنا ۚ ربنا ولا تحمل علينا إصرا كما حملته على الذين من قبلنا ۚ ربنا ولا تحملنا ما لا طاقة لنا به ۖ واعف عنا واغفر لنا وارحمنا ۚ أنت مولانا فانصرنا على القوم الكافرين</span><span class="translation">Allah does not require of any soul more than what it can afford. All good will be for its own benefit, and all evil will be to its own loss. ˹The believers pray,˺ “Our Lord! Do not punish us if we forget or make a mistake. Our Lord! Do not place a burden on us like the one you placed on those before us. Our Lord! Do not burden us with what we cannot bear. Pardon us, forgive us, and have mercy on us. You are our ˹only˺ Guardian. So grant us victory over the disbelieving people.”</span><a class="quran-link" href="https://quran.com/2/286" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>3:16</td><td><details><summary>Prayer of Believers #3</summary><div class="details-content"><span class="arabic" dir="rtl">الذين يقولون ربنا إننا آمنا فاغفر لنا ذنوبنا وقنا عذاب النار</span><span class="translation">who pray, “Our Lord! We have believed, so forgive our sins and protect us from the torment of the Fire.”</span><a class="quran-link" href="https://quran.com/3/16" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>3:35</td><td><details><summary>Prayer of Hana - Wife of ʿImrān(Amram) #1</summary><div class="details-content"><span class="arabic" dir="rtl">إذ قالت امرأت عمران رب إني نذرت لك ما في بطني محررا فتقبل مني ۖ إنك أنت السميع العليم</span><span class="translation">˹Remember˺ when the wife of ’Imrân said, “My Lord! I dedicate what is in my womb entirely to Your service, so accept it from me. You ˹alone˺ are truly the All-Hearing, All-Knowing.”</span><a class="quran-link" href="https://quran.com/3/35" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>3:36</td><td><details><summary>Prayer of Hana - Wife of ʿImrān(Amram) #2</summary><div class="details-content"><span class="arabic" dir="rtl">فلما وضعتها قالت رب إني وضعتها أنثى والله أعلم بما وضعت وليس الذكر كالأنثى ۖ وإني سميتها مريم وإني أعيذها بك وذريتها من الشيطان الرجيم</span><span class="translation">When she delivered, she said, “My Lord! I have given birth to a girl,”—and Allah fully knew what she had delivered—“and the male is not like the female. I have named her Mary, and I seek Your protection for her and her offspring from Satan, the accursed.”</span><a class="quran-link" href="https://quran.com/3/36" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>3:38</td><td><details><summary>Prayer of Zakariyyā(Zachariah) #1</summary><div class="details-content"><span class="arabic" dir="rtl">هنالك دعا زكريا ربه ۖ قال رب هب لي من لدنك ذرية طيبة ۖ إنك سميع الدعاء</span><span class="translation">Then and there Zachariah prayed to his Lord, saying, “My Lord! Grant me—by your grace—righteous offspring. You are certainly the Hearer of ˹all˺ prayers.”</span><a class="quran-link" href="https://quran.com/3/38" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>3:147</td><td><details><summary>Prayer of Believers #4</summary><div class="details-content"><span class="arabic" dir="rtl">وما كان قولهم إلا أن قالوا ربنا اغفر لنا ذنوبنا وإسرافنا في أمرنا وثبت أقدامنا وانصرنا على القوم الكافرين</span><span class="translation">And all they said was, “Our Lord! Forgive our sins and excesses, make our steps firm, and grant us victory over the disbelieving people.”</span><a class="quran-link" href="https://quran.com/3/147" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>3:191-194</td><td><details><summary>Prayer of Rightous #1</summary><div class="details-content"><span class="arabic" dir="rtl">الذين يذكرون الله قياما وقعودا وعلى جنوبهم ويتفكرون في خلق السماوات والأرض ربنا ما خلقت هذا باطلا سبحانك فقنا عذاب النار ربنا إنك من تدخل النار فقد أخزيته ۖ وما للظالمين من أنصار ربنا إننا سمعنا مناديا ينادي للإيمان أن آمنوا بربكم فآمنا ۚ ربنا فاغفر لنا ذنوبنا وكفر عنا سيئاتنا وتوفنا مع الأبرار ربنا وآتنا ما وعدتنا على رسلك ولا تخزنا يوم القيامة ۗ إنك لا تخلف الميعاد</span><span class="translation">˹They are˺ those who remember Allah while standing, sitting, and lying on their sides, and reflect on the creation of the heavens and the earth ˹and pray˺, “Our Lord! You have not created ˹all of˺ this without purpose. Glory be to You! Protect us from the torment of the Fire. Our Lord! We have heard the caller to ˹true˺ faith calling ˹all people˺, ‘Believe in your Lord.’ So we have believed. Our Lord! Forgive our sins, absolve us of our misdeeds, and join us with the virtuous when we die‎. Our Lord! Grant us what You have promised us through Your messengers and do not put us to shame on Judgment Day—for certainly You never fail in Your promise.”</span><a class="quran-link" href="https://quran.com/3/191-194" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>4:75</td><td><details><summary>Prayer of the Oppresssed #1</summary><div class="details-content"><span class="arabic" dir="rtl">وما لكم لا تقاتلون في سبيل الله والمستضعفين من الرجال والنساء والولدان الذين يقولون ربنا أخرجنا من هذه القرية الظالم أهلها واجعل لنا من لدنك وليا واجعل لنا من لدنك نصيرا</span><span class="translation">And what is it with you? You do not fight in the cause of Allah and for oppressed men, women, and children who cry out, “Our Lord! Deliver us from this land of oppressors! Appoint for us a saviour; appoint for us a helper—all by Your grace.”</span><a class="quran-link" href="https://quran.com/4/75" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>5:25</td><td><details><summary>Prayer of Musa(Moses) #1</summary><div class="details-content"><span class="arabic" dir="rtl">قال رب إني لا أملك إلا نفسي وأخي ۖ فافرق بيننا وبين القوم الفاسقين</span><span class="translation">Moses pleaded, “My Lord! I have no control over anyone except myself and my brother. So set us apart from the rebellious people.”</span><a class="quran-link" href="https://quran.com/5/25" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>5:83-84</td><td><details><summary>Prayer of Christians #1</summary><div class="details-content"><span class="arabic" dir="rtl">وإذا سمعوا ما أنزل إلى الرسول ترى أعينهم تفيض من الدمع مما عرفوا من الحق يقولون ربنا آمنا فاكتبنا مع الشاهدين وما لنا لا نؤمن بالله وما جاءنا من الحق ونطمع أن يدخلنا ربنا مع القوم الصالحين</span><span class="translation">When they listen to what has been revealed to the Messenger, you see their eyes overflowing with tears for recognizing the truth. They say, “Our Lord! We believe, so count us among the witnesses. Why should we not believe in Allah and the truth that has come to us? And we long for our Lord to include us in the company of the righteous.”</span><a class="quran-link" href="https://quran.com/5/83-84" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>5:114</td><td><details><summary>Prayer of Yesa(Jesus) #1</summary><div class="details-content"><span class="arabic" dir="rtl">قال عيسى ابن مريم اللهم ربنا أنزل علينا مائدة من السماء تكون لنا عيدا لأولنا وآخرنا وآية منك وارزقنا وأنت خير الرازقين</span><span class="translation">Jesus, son of Mary, prayed, “O Allah, our Lord! Send us from heaven a table spread with food as a feast for us—the first and last of us—and as a sign from You. Provide for us! You are indeed the Best Provider.”</span><a class="quran-link" href="https://quran.com/5/114" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>7:47</td><td><details><summary>Prayer of People in Heareafter</summary><div class="details-content"><span class="arabic" dir="rtl">وإذا صرفت أبصارهم تلقاء أصحاب النار قالوا ربنا لا تجعلنا مع القوم الظالمين</span><span class="translation">When their eyes will turn towards the residents of Hell, they will pray, “Our Lord! Do not join us with the wrongdoing people.”</span><a class="quran-link" href="https://quran.com/7/47" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>10:85-86</td><td><details><summary>Prayer of Israelites</summary><div class="details-content"><span class="arabic" dir="rtl">وقالوا على الله توكلنا ربنا لا تجعلنا فتنة للقوم الظالمين ونجنا برحمتك من القوم الكافرين</span><span class="translation">They replied, “In Allah we trust. Our Lord! Do not subject us to the persecution of the oppressive people, and deliver us by Your mercy from the disbelieving people.”</span><a class="quran-link" href="https://quran.com/10/85-86" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>10:88</td><td><details><summary>Prayer of Musa(Moses) #2</summary><div class="details-content"><span class="arabic" dir="rtl">وقال موسى ربنا إنك آتيت فرعون وملأه زينة وأموالا في الحياة الدنيا ربنا ليضلوا عن سبيلك ربنا اطمس على أموالهم واشدد على قلوبهم فلا يؤمنوا حتى يروا العذاب الأليم</span><span class="translation">Moses prayed, “Our Lord! You have granted Pharaoh and his chiefs luxuries and riches in this worldly life, ˹which they abused˺ to lead people astray from Your Way! Our Lord, destroy their riches and harden their hearts so that they will not believe until they see the painful punishment.”</span><a class="quran-link" href="https://quran.com/10/88" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>11:45</td><td><details><summary>Prayer of Nūḥ(Noah) #1</summary><div class="details-content"><span class="arabic" dir="rtl">ونادى نوح ربه فقال رب إن ابني من أهلي وإن وعدك الحق وأنت أحكم الحاكمين</span><span class="translation">Noah called out to his Lord, saying, “My Lord! Certainly my son is ˹also˺ of my family, Your promise is surely true, and You are the most just of all judges!”</span><a class="quran-link" href="https://quran.com/11/45" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>11:47</td><td><details><summary>Prayer of Nūḥ(Noah) #2</summary><div class="details-content"><span class="arabic" dir="rtl">قال رب إني أعوذ بك أن أسألك ما ليس لي به علم وإلا تغفر لي وترحمني أكن من الخاسرين</span><span class="translation">Noah pleaded, “My Lord, I seek refuge in You from asking You about what I have no knowledge of, and unless You forgive me and have mercy on me, I will be one of the losers.”</span><a class="quran-link" href="https://quran.com/11/47" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>12:33</td><td><details><summary>Prayer of Yūsuf(Joseph) #1</summary><div class="details-content"><span class="arabic" dir="rtl">قال رب السجن أحب إلي مما يدعون إليه وإلا تصرف عني كيدهن أصب إليهن وأكن من الجاهلينṣbu ilayhinna wa-akun mina l-jāhilīna</span><span class="translation">Joseph prayed, “My Lord! I would rather be in jail than do what they invite me to. And if You do not turn their cunning away from me, I might yield to them and fall into ignorance.”</span><a class="quran-link" href="https://quran.com/12/33" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>12:101</td><td><details><summary>Prayer of Yūsuf(Joseph) #2</summary><div class="details-content"><span class="arabic" dir="rtl">رب قد آتيتني من الملك وعلمتني من تأويل الأحاديث فاطر السماوات والأرض أنت وليي في الدنيا والآخرة توفني مسلما والحقني بالصالحين</span><span class="translation">“My Lord! You have surely granted me authority and taught me the interpretation of dreams. ˹O˺ Originator of the heavens and the earth! You are my Guardian in this world and the Hereafter. Allow me to die as one who submits and join me with the righteous.”</span><a class="quran-link" href="https://quran.com/12/101" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>14:35-41</td><td><details><summary>Prayer of Ibrāhīm(Abraham) #2</summary><div class="details-content"><span class="arabic" dir="rtl">وإذ قال إبراهيم رب اجعل هذا البلد آمنا واجنبني وبني أن نعبد الأصنام ربنا إني أسكنت من ذريتي بواد غير ذي زرع عند بيتك المحرم ربنا ليقيموا الصلاة فاجعل أفئدة من الناس تهوي إليهم وارزقهم من الثمرات لعلهم يشكرون ربنا إنك تعلم ما نخفي وما نعلن وما يخفى على الله من شيء في الأرض ولا في السماء الحمد لله الذي وهب لي على الكبر إسماعيل وإسحاق إن ربي لسميع الدعاء</span><span class="translation">˹Remember˺ when Abraham prayed, “My Lord! Make this city ˹of Mecca˺ secure, and keep me and my children away from the worship of idols. Our Lord! I have settled some of my offspring in a barren valley, near Your Sacred House, our Lord, so that they may establish prayer. So make the hearts of ˹believing˺ people incline towards them and provide them with fruits, so perhaps they will be thankful. Our Lord! You certainly know what we conceal and what we reveal. Nothing on earth or in heaven is hidden from Allah. All praise is for Allah who has blessed me with Ishmael and Isaac in my old age. My Lord is indeed the Hearer of ˹all˺ prayers.</span><a class="quran-link" href="https://quran.com/14/35-41" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>17:24</td><td><details><summary>Prayer for Parents</summary><div class="details-content"><span class="arabic" dir="rtl">واخفض لهما جناح الذل من الرحمة وقل رب ارحمهما كما ربياني صغيرا</span><span class="translation">And be humble with them out of mercy, and pray, “My Lord! Be merciful to them as they raised me when I was young.”</span><a class="quran-link" href="https://quran.com/17/24" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>18:10</td><td><details><summary>Prayer of Youth/People of the Cave</summary><div class="details-content"><span class="arabic" dir="rtl">إذ أوى الفتية إلى الكهف فقالوا ربنا آتنا من لدنك رحمة وهيئ لنا من أمرنا رشدا</span><span class="translation">˹Remember˺ when those youths took refuge in the cave, and said, “Our Lord! Grant us mercy from Yourself and guide us rightly through our ordeal.”</span><a class="quran-link" href="https://quran.com/18/10" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>19:4-6</td><td><details><summary>Prayer of Zakariyyā(Zachariah) #2</summary><div class="details-content"><span class="arabic" dir="rtl">قال رب إني وهن العظم مني واشتعل الرأس شيبا ولم أكن بدعائك رب شقيا وإني خفت الموالي من ورائي وكانت امرأتي عاقرا فهب لي من لدنك وليا يرثني ويرث من آل يعقوب واجعله رب رضيا</span><span class="translation">saying, “My Lord! Surely my bones have become brittle, and grey hair has spread across my head, but I have never been disappointed in my prayer to You, my Lord! And I am concerned about ˹the faith of˺ my relatives after me, since my wife is barren. So grant me, by Your grace, an heir, who will inherit ˹prophethood˺ from me and the family of Jacob, and make him, O  Lord, pleasing ˹to You˺!”</span><a class="quran-link" href="https://quran.com/19/4-6" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>20:25-35</td><td><details><summary>Prayer of Musa(Moses) #3</summary><div class="details-content"><span class="arabic" dir="rtl">قال رب اشرح لي صدري ويسر لي أمري واحلل عقدة من لساني يفقهوا قولي واجعل لي وزيرا من أهلي هارون أخي اشدد به أزري وأشركه في أمري كي نسبحك كثيرا ونذكرك كثيرا إنك كنت بنا بصيرا</span><span class="translation">Moses prayed, “My Lord! Uplift my heart for me, and make my task easy, and remove the impediment from my tongue so people may understand my speech, and grant me a helper from my family,</span><a class="quran-link" href="https://quran.com/20/25-35" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>20:114</td><td><details><summary>Prayer for Knowledge</summary><div class="details-content"><span class="arabic" dir="rtl">فتعالى الله الملك الحق ۗ ولا تعجل بالقرآن من قبل أن يقضى إليك وحيه ۖ وقل رب زدني علما</span><span class="translation">Exalted is Allah, the True King! Do not rush to recite ˹a revelation of˺ the Quran ˹O Prophet˺ before it is ˹properly˺ conveyed to you, and pray, “My Lord! Increase me in knowledge.”</span><a class="quran-link" href="https://quran.com/20/114" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>21:83</td><td><details><summary>Prayer of Ayyūb(Job) #1</summary><div class="details-content"><span class="arabic" dir="rtl">وأيوب إذ نادى ربه أني مسني الضر وأنت أرحم الراحمين</span><span class="translation">And ˹remember˺ when Job cried out to his Lord, “I have been touched with adversity, and You are the Most Merciful of the merciful.”</span><a class="quran-link" href="https://quran.com/21/83" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>21:87</td><td><details><summary>Prayer of Yūnus(Jonah)</summary><div class="details-content"><span class="arabic" dir="rtl">وذا النون إذ ذهب مغاضبا فظن أن لن نقدر عليه فنادى في الظلمات أن لا إله إلا أنت سبحانك إني كنت من الظالمين</span><span class="translation">And ˹remember˺ when the Man of the Whale stormed off ˹from his city˺ in a rage, thinking We would not restrain him. Then in the ˹veils of˺ darkness he cried out, “There is no god ˹worthy of worship˺ except You. Glory be to You! I have certainly done wrong.”</span><a class="quran-link" href="https://quran.com/21/87" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>21:89</td><td><details><summary>Prayer of Zakariyyā(Zachariah) #3</summary><div class="details-content"><span class="arabic" dir="rtl">وزكريا إذ نادى ربه رب لا تذرني فردا وأنت خير الوارثين</span><span class="translation">And ˹remember˺ when Zachariah cried out to his Lord, “My Lord! Do not leave me childless, though You are the Best of Successors.”</span><a class="quran-link" href="https://quran.com/21/89" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>21:112</td><td><details><summary>Prayer of Muhammed ﷺ</summary><div class="details-content"><span class="arabic" dir="rtl">قال رب احكم بالحق ۗ وربنا الرحمن المستعان على ما تصفون</span><span class="translation">˹In the end,˺ the Prophet said, “My Lord! Judge ˹between us˺ in truth. And our Lord is the Most Compassionate, Whose help is sought against what you claim.”</span><a class="quran-link" href="https://quran.com/21/112" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>23:26</td><td><details><summary>Prayer of Nūḥ(Noah) #3</summary><div class="details-content"><span class="arabic" dir="rtl">قال رب انصرني بما كذبون</span><span class="translation">Noah prayed, “My Lord! Help me, because they have denied ˹me˺.”</span><a class="quran-link" href="https://quran.com/23/26" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>23:28</td><td><details><summary>Prayer for Thanks after rescue</summary><div class="details-content"><span class="arabic" dir="rtl">فإذا استويت أنت ومن معك على الفلك فقل الحمد لله الذي نجانا من القوم الظالمين</span><span class="translation">Then when you and those with you have settled in the Ark, say, “All praise is for Allah, Who saved us from the wrongdoing people.”</span><a class="quran-link" href="https://quran.com/23/28" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>23:29</td><td><details><summary>Prayer for Safe Journey</summary><div class="details-content"><span class="arabic" dir="rtl">وقل رب أنزلني منزلا مباركا وأنت خير المنزلين</span><span class="translation">And pray, “My Lord! Allow me a blessed landing, for You are the best accommodator.”</span><a class="quran-link" href="https://quran.com/23/29" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>23:39</td><td><details><summary>Prayer of Nūḥ(Noah) #4</summary><div class="details-content"><span class="arabic" dir="rtl">قال رب انصرني بما كذبون</span><span class="translation">The messenger prayed, “My Lord! Help me, because they have denied ˹me˺.”</span><a class="quran-link" href="https://quran.com/23/39" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>23:93-94</td><td><details><summary>Prayer taught to Muhammed ﷺ</summary><div class="details-content"><span class="arabic" dir="rtl">قل رب إما تريني ما يوعدون رب فلا تجعلني في القوم الظالمين</span><span class="translation">Say, ˹O Prophet,˺ “My Lord! Should You show me what they are threatened with, then, my Lord, do not count me among the wrongdoing people.”</span><a class="quran-link" href="https://quran.com/23/93-94" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>23:97-98</td><td><details><summary>Prayer taught to Muhammed ﷺ</summary><div class="details-content"><span class="arabic" dir="rtl">وقل رب أعوذ بك من همزات الشياطين وأعوذ بك رب أن يحضرون</span><span class="translation">And say, “My Lord! I seek refuge in You from the temptations of the devils. And I seek refuge in You, my Lord, that they ˹even˺ come near me.”</span><a class="quran-link" href="https://quran.com/23/97-98" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>23:118</td><td><details><summary>Prayer taught to Muhammed ﷺ</summary><div class="details-content"><span class="arabic" dir="rtl">وقل رب اغفر وارحم وأنت خير الراحمين</span><span class="translation">Say, ˹O Prophet,˺ “My Lord! Forgive and have mercy, for You are the best of those who show mercy.”</span><a class="quran-link" href="https://quran.com/23/118" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>25:65-66</td><td><details><summary>Prayer of Servants of the Most Merciful #1</summary><div class="details-content"><span class="arabic" dir="rtl">والذين يقولون ربنا اصرف عنا عذاب جهنم ۖ إن عذابها كان غراما إنها ساءت مستقرا ومقاما</span><span class="translation">˹They are˺ those who pray, “Our Lord! Keep the punishment of Hell away from us, for its punishment is indeed unrelenting. It is certainly an evil place to settle and reside.”</span><a class="quran-link" href="https://quran.com/25/65-66" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>25:74</td><td><details><summary>Prayer of Servants of the Most Merciful #2</summary><div class="details-content"><span class="arabic" dir="rtl">والذين يقولون ربنا هب لنا من أزواجنا وذرياتنا قرة أعين واجعلنا للمتقين إماما</span><span class="translation">˹They are˺ those who pray, “Our Lord! Bless us with ˹pious˺ spouses and offspring who will be the joy of our hearts, and make us models for the righteous.”</span><a class="quran-link" href="https://quran.com/25/74" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>26:83-89</td><td><details><summary>Prayer of Ibrāhīm(Abraham) #3</summary><div class="details-content"><span class="arabic" dir="rtl">رب هب لي حكما وألحقني بالصالحين واجعل لي لسان صدق في الآخرين واجعلني من ورثة جنة النعيم واغفر لأبي إنه كان من الضالين ولا تخزني يوم يبعثون يوم لا ينفع مال ولا بنون إلا من أتى الله بقلب سليم</span><span class="translation">“My Lord! Grant me wisdom, and join me with the righteous. Bless me with honourable mention among later generations. Make me one of those awarded the Garden of Bliss. Forgive my father, for he is certainly one of the misguided. And do not disgrace me on the Day all will be resurrected—</span><a class="quran-link" href="https://quran.com/26/83-89" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>26:117-118</td><td><details><summary>Prayer of Nūḥ(Noah) #4</summary><div class="details-content"><span class="arabic" dir="rtl">قال رب إن قومي كذبون فافتح بيني وبينهم فتحا ونجني ومن معي من المؤمنين</span><span class="translation">Noah prayed, “My Lord! My people have truly rejected me. So judge between me and them decisively, and save me and the believers with me.”</span><a class="quran-link" href="https://quran.com/26/117-118" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>26:168-169</td><td><details><summary>Prayer of Lūṭ(Lot) #1</summary><div class="details-content"><span class="arabic" dir="rtl">قال إني لعملكم من القالين رب نجني وأهلي مما يعملون</span><span class="translation">Lot responded, “I am truly one of those who despise your ˹shameful˺ practice. My Lord! Save me and my family from ˹the consequences of˺ what they do.”</span><a class="quran-link" href="https://quran.com/26/168-169" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>27:19</td><td><details><summary>Prayer of Sulaymān(Solomon) #1</summary><div class="details-content"><span class="arabic" dir="rtl">فتبسم ضاحكا من قولها وقال رب أوزعني أن أشكر نعمتك التي أنعمت علي وعلى والدي وأن أعمل صالحا ترضاه وأدخلني برحمتك في عبادك الصالحين</span><span class="translation">So Solomon smiled in amusement at her words, and prayed, “My Lord! Inspire me to ˹always˺ be thankful for Your favours which You have blessed me and my parents with, and to do good deeds that please you. Admit me, by Your mercy, into ˹the company of˺ Your righteous servants.”</span><a class="quran-link" href="https://quran.com/27/19" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>27:44</td><td><details><summary>Prayer of Bilqīs - Queen of Sheba</summary><div class="details-content"><span class="arabic" dir="rtl">قيل لها ادخلي الصرح ۖ فلما رأته حسبته لجة وكشفت عن ساقيها ۚ قال إنه صرح ممرد من قوارير ۗ قالت رب إني ظلمت نفسي وأسلمت مع سليمان لله رب العالمين</span><span class="translation">Then she was told, “Enter the palace.” But when she saw the hall, she thought it was a body of water, so she bared her legs. Solomon said. “It is just a palace paved with crystal.” ˹At last˺ she declared, “My Lord! I have certainly wronged my soul. Now I ˹fully˺ submit myself along with Solomon to Allah, the Lord of all worlds.”</span><a class="quran-link" href="https://quran.com/27/44" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>28:16</td><td><details><summary>Prayer of Musa(Moses) #4</summary><div class="details-content"><span class="arabic" dir="rtl">قال رب إني ظلمت نفسي فاغفر لي فغفر له ۚ إنه هو الغفور الرحيم</span><span class="translation">He pleaded, “My Lord! I have definitely wronged my soul, so forgive me.” So He forgave him, ˹for˺ He is indeed the All-Forgiving, Most Merciful.</span><a class="quran-link" href="https://quran.com/28/16" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>28:17</td><td><details><summary>Prayer of Musa(Moses) #5</summary><div class="details-content"><span class="arabic" dir="rtl">قال رب بما أنعمت علي فلن أكون ظهيرا للمجرمين</span><span class="translation">Moses pledged, “My Lord! For all Your favours upon me, I will never side with the wicked.”</span><a class="quran-link" href="https://quran.com/28/17" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>28:21</td><td><details><summary>Prayer of Musa(Moses) #6</summary><div class="details-content"><span class="arabic" dir="rtl">فخرج منها خائفا يترقب ۖ قال رب نجني من القوم الظالمين</span><span class="translation">So Moses left the city in a state of fear and caution, praying, “My Lord! Deliver me from the wrongdoing people.”</span><a class="quran-link" href="https://quran.com/28/21" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>28:24</td><td><details><summary>Prayer of Musa(Moses) #7</summary><div class="details-content"><span class="arabic" dir="rtl">فسقى لهما ثم تولى إلى الظل فقال رب إني لما أنزلت إلي من خير فقير</span><span class="translation">So he watered ˹their herd˺ for them, then withdrew to the shade and prayed, “My Lord! I am truly in ˹desperate˺ need of whatever provision You may have in store for me.”</span><a class="quran-link" href="https://quran.com/28/24" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>28:33-34</td><td><details><summary>Prayer of Musa(Moses) #8</summary><div class="details-content"><span class="arabic" dir="rtl">قال رب إني قتلت منهم نفسا فأخاف أن يقتلون وأخي هارون هو أفصح مني لسانا فأرسله معي ردءا يصدقني ۖ إني أخاف أن يكذبون</span><span class="translation">Moses appealed, “My Lord! I have indeed killed a man from them, so I fear they may kill me. And my brother Aaron is more eloquent than I, so send him with me as a helper to support what I say, for I truly fear they may reject me.”</span><a class="quran-link" href="https://quran.com/28/33-34" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>29:30</td><td><details><summary>Prayer of Lūṭ(Lot) #2</summary><div class="details-content"><span class="arabic" dir="rtl">قال رب انصرني على القوم المفسدين</span><span class="translation">Lot prayed, “My Lord! Help me against the people of corruption.”</span><a class="quran-link" href="https://quran.com/29/30" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>37:100</td><td><details><summary>Prayer of Ibrāhīm(Abraham) #4</summary><div class="details-content"><span class="arabic" dir="rtl">رب هب لي من الصالحين</span><span class="translation">My Lord! Bless me with righteous offspring.”</span><a class="quran-link" href="https://quran.com/37/100" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>38:35</td><td><details><summary>Prayer of Sulaymān(Solomon) #2</summary><div class="details-content"><span class="arabic" dir="rtl">قال رب اغفر لي وهب لي ملكا لا ينبغي لأحد من بعدي إنك أنت الوهاب</span><span class="translation">He prayed, “My Lord! Forgive me, and grant me an authority that will never be matched by anyone after me. You are indeed the Giver ˹of all bounties˺.”</span><a class="quran-link" href="https://quran.com/38/35" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>40:7-9</td><td><details><summary>Prayer of the Angels</summary><div class="details-content"><span class="arabic" dir="rtl">الذين يحملون العرش ومن حوله يسبحون بحمد ربهم ويؤمنون به ويستغفرون للذين آمنوا ربنا وسعت كل شيء رحمة وعلما فاغفر للذين تابوا واتبعوا سبيلك وقهم عذاب الجحيم ربنا وأدخلهم جنات عدن التي وعدتهم ومن صلح من آبائهم وأزواجهم وذريتهم إنك أنت العزيز الحكيم وقهم السيئات ومن تق السيئات يومئذ فقد رحمته وذلك هو الفوز العظيم</span><span class="translation">Those ˹angels˺ who carry the Throne and those around it glorify the praises of their Lord, have faith in Him, and seek forgiveness for the believers, ˹praying:˺ “Our Lord! You encompass everything in ˹Your˺ mercy and knowledge. So forgive those who repent and follow Your Way, and protect them from the torment of the Hellfire. Our Lord! Admit them into the Gardens of Eternity which You have promised them, along with the righteous among their parents, spouses, and descendants. You ˹alone˺ are truly the Almighty, All-Wise. And protect them from ˹the consequences of their˺ evil deeds. For whoever You protect from the evil of their deeds on that Day will have been shown Your mercy. That is ˹truly˺ the ultimate triumph.”</span><a class="quran-link" href="https://quran.com/40/7-9" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>40:65</td><td><details><summary>Prayer for Showing Gratitude</summary><div class="details-content"><span class="arabic" dir="rtl">هو الحي لا إله إلا هو فادعوه مخلصين له الدين الحمد لله رب العالمين</span><span class="translation">He is the Ever-Living. There is no god ˹worthy of worship˺ except Him. So call upon Him with sincere devotion, ˹saying,˺ “All praise is for Allah—Lord of all worlds.”</span><a class="quran-link" href="https://quran.com/40/65" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr class="highlight-row"><td>46:15</td><td><details><summary>Prayer upon Reaching The Age of 40</summary><div class="details-content"><span class="arabic" dir="rtl">ووصينا الإنسان بوالديه إحسانا حملته أمه كرها ووضعته كرها وحمله وفصاله ثلاثون شهرا حتى إذا بلغ أشده وبلغ أربعين سنة قال رب أوزعني أن أشكر نعمتك التي أنعمت علي وعلى والدي وأن أعمل صالحا ترضاه وأصلح لي في ذريتي إني تبت إليك وإني من المسلمين</span><span class="translation">We have commanded people to honour their parents. Their mothers bore them in hardship and delivered them in hardship. Their ˹period of˺ bearing and weaning is thirty months. In time, when the child reaches their prime at the age of forty, they pray, “My Lord! Inspire me to ˹always˺ be thankful for Your favours which You blessed me and my parents with, and to do good deeds that please You. And instil righteousness in my offspring. I truly repent to You, and I truly submit ˹to Your Will˺.”</span><a class="quran-link" href="https://quran.com/46/15" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>54:10</td><td><details><summary>Prayer of Nūḥ(Noah) #5</summary><div class="details-content"><span class="arabic" dir="rtl">فدعا ربه أني مغلوب فانتصر</span><span class="translation">So he cried out to his Lord, “I am helpless, so help ˹me˺!”</span><a class="quran-link" href="https://quran.com/54/10" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>59:10</td><td><details><summary>Prayer of al-Anṣār</summary><div class="details-content"><span class="arabic" dir="rtl">والذين جاءوا من بعدهم يقولون ربنا اغفر لنا ولإخواننا الذين سبقونا بالإيمان ولا تجعل في قلوبنا غلا للذين آمنوا ربنا إنك رءوف رحيم</span><span class="translation">And those who come after them will pray, “Our Lord! Forgive us and our fellow believers who preceded us in faith, and do not allow bitterness into our hearts towards those who believe. Our Lord! Indeed, You are Ever Gracious, Most Merciful.”</span><a class="quran-link" href="https://quran.com/59/10" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>60:4</td><td><details><summary>Prayer of Believers #5</summary><div class="details-content"><span class="arabic" dir="rtl">قد كانت لكم أسوة حسنة في إبراهيم والذين معه إذ قالوا لقومهم إنا برآء منكم ومما تعبدون من دون الله كفرنا بكم وبدا بيننا وبينكم العداوة والبغضاء أبدا حتى تؤمنوا بالله وحده إلا قول إبراهيم لأبيه لأستغفرن لك وما أملك لك من الله من شيء ربنا عليك توكلنا وإليك أنبنا وإليك المصير</span><span class="translation">You already have an excellent example in Abraham and those with him, when they said to their people, “We totally dissociate ourselves from you and ˹shun˺ whatever ˹idols˺ you worship besides Allah. We reject you. The enmity and hatred that has arisen between us and you will last until you believe in Allah alone.” The only exception is when Abraham said to his father, “I will seek forgiveness for you,˹” adding, “but˺ I cannot protect you from Allah at all.” ˹The believers prayed,˺ “Our Lord! In You we trust. And to You we ˹always˺ turn. And to You is the final return.</span><a class="quran-link" href="https://quran.com/60/4" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>66:8</td><td><details><summary>Prayer of Believers #6</summary><div class="details-content"><span class="arabic" dir="rtl">يا أيها الذين آمنوا توبوا إلى الله توبة نصوحا عسى ربكم أن يكفر عنكم سيئاتكم ويدخلكم جنات تجري من تحتها الأنهار يوم لا يخزي الله النبي والذين آمنوا معه نورهم يسعى بين أيديهم وبأيمانهم يقولون ربنا أتمم لنا نورنا واغفر لنا إنك على كل شيء قدير</span><span class="translation">O believers! Turn to Allah in sincere repentance, so your Lord may absolve you of your sins and admit you into Gardens, under which rivers flow, on the Day Allah will not disgrace the Prophet or the believers with him. Their light will shine ahead of them and on their right. They will say, “Our Lord! Perfect our light for us, and forgive us. ˹For˺ You are truly Most Capable of everything.”</span><a class="quran-link" href="https://quran.com/66/8" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>66:11</td><td><details><summary>Prayer of Āsiyah - Wife of Pharoh</summary><div class="details-content"><span class="arabic" dir="rtl">وضرب الله مثلا للذين آمنوا امرأة فرعون إذ قالت رب ابن لي عندك بيتا في الجنة ونجني من فرعون وعمله ونجني من القوم الظالمين</span><span class="translation">And Allah sets forth an example for the believers: the wife of Pharaoh, who prayed, “My Lord! Build me a house in Paradise near You, deliver me from Pharaoh and his ˹evil˺ doing, and save me from the wrongdoing people.”</span><a class="quran-link" href="https://quran.com/66/11" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>71:24</td><td><details><summary>Prayer of Nūḥ(Noah) #6</summary><div class="details-content"><span class="arabic" dir="rtl">وقد أضلوا كثيرا ولا تزد الظالمين إلا ضلالا</span><span class="translation">Those ˹elite˺ have already led many astray. So ˹O Lord˺, only allow the wrongdoers to stray farther away.”</span><a class="quran-link" href="https://quran.com/71/24" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+      <tr><td>71:26-28</td><td><details><summary>Prayer of Nūḥ(Noah) #7</summary><div class="details-content"><span class="arabic" dir="rtl">وقال نوح رب لا تذر على الأرض من الكافرين ديارا إنك إن تذرهم يضلوا عبادك ولا يلدوا إلا فاجرا كفارا رب اغفر لي ولوالدي ولمن دخل بيتي مؤمنا ولللمؤمنين والمؤمنات ولا تزد الظالمين إلا تبارا</span><span class="translation">Noah had prayed, “My Lord! Do not leave a single disbeliever on earth. For if You spare ˹any of˺ them, they will certainly mislead Your servants, and give birth only to ˹wicked˺ sinners, staunch disbelievers. My Lord! Forgive me, my parents, and whoever enters my house in faith, and ˹all˺ believing men and women. And increase the wrongdoers only in destruction.”</span><a class="quran-link" href="https://quran.com/71/26-28" target="_blank">Read on Quran.com →</a></div></details></td></tr>
+</tbody>
+  </table>
+</div>
+<footer style="margin-top:32px;padding-top:16px;border-top:1px solid #ddd;font-size:0.9rem;color:#666">
+    <p>Compiled by R Abdul Rahman & Family</p>
+    <p><strong>Disclaimer:</strong> This work is for personal and educational purposes only. While every effort has been made to ensure accuracy, there may be mistakes or omissions. Please verify all information with authoritative sources.
+    Reach out to me for corrections or suggestions at r@rahmanr.com</p>
+</footer>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // DOM Elements
+    const filterInput = document.getElementById('filterInput');
+    const clearBtn = document.getElementById('clearBtn');
+    const rows = document.querySelectorAll('#prayerTable tbody tr');
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    // Filter Logic
+    function runFilter() {
+      const query = filterInput.value.toLowerCase().trim();
+      if (clearBtn) {
+        clearBtn.style.display = query.length > 0 ? 'flex' : 'none';
+      }
+      rows.forEach(row => {
+        const ref = row.cells[0].textContent.toLowerCase();
+        const desc = row.cells[1].textContent.toLowerCase();
+        if (ref.includes(query) || desc.includes(query)) {
+          row.classList.remove('hidden');
+        } else {
+          row.classList.add('hidden');
+        }
+      });
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        if (filterInput) {
+          filterInput.value = '';
+          runFilter();
+          filterInput.focus();
+        }
+      });
+    }
+
+    if (filterInput) {
+      filterInput.addEventListener('input', runFilter);
+    }
+
+    // Theme Toggle Logic
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        body.classList.add('dark-mode');
+        if (themeToggle) {
+          themeToggle.checked = true;
+        }
+      } else {
+        body.classList.remove('dark-mode');
+        if (themeToggle) {
+          themeToggle.checked = false;
+        }
+      }
+    }
+
+    if (themeToggle) {
+      themeToggle.addEventListener('change', () => {
+        const newTheme = themeToggle.checked ? 'dark' : 'light';
+        localStorage.setItem('theme', newTheme);
+        applyTheme(newTheme);
+      });
+    }
+
+    // Initialize theme on page load
+    function initializeTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        applyTheme(savedTheme);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        applyTheme('dark');
+      } else {
+        applyTheme('light');
+      }
+    }
+
+    initializeTheme();
+  });
+</script>
+
+</body>
+</html>

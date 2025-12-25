@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Prayers from the Quran - Interactive</title>
+  <style>
+    body { font-family: Segoe UI, Roboto, Arial, sans-serif; margin: 24px; color: #111; line-height: 1.5; }
+    
+    /* Search Bar Styling */
+    #filterInput {
+      width: 100%;
+      max-width: 900px;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    table { border-collapse: collapse; width: 100%; max-width: 900px; }
+    th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+    th { background: #f5f5f5; position: sticky; top: 0; }
+    
+    /* Collapsible Styling */
+    details { cursor: pointer; }
+    summary { font-weight: 600; color: #0056b3; outline: none; }
+    details[open] summary { margin-bottom: 10px; color: #000; }
+    .content { padding: 10px; background: #f9f9f9; border-radius: 4px; border-left: 4px solid #007bff; }
+
+    .highlight-row { background-color: #e8f4f8; }
+    tr:hover { background-color: #f1f1f1; }
+  </style>
+</head>
+<body>
+
+  <h1>Prayers from the Quran</h1>
+
+  <input type="text" id="filterInput" placeholder="Search by Prophet name, reference, or keyword (e.g. 'Musa' or 'Parents')...">
+
+  <table id="prayerTable">
+    <thead>
+      <tr>
+        <th style="width: 20%;">Reference</th>
+        <th>Description & Text</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>17:24</td>
+        <td>
+          <details>
+            <summary>Prayer for Parents</summary>
+            <div class="content">
+              <p dir="rtl" lang="ar">رَّبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا</p>
+              <p><em>"My Lord, have mercy upon them as they brought me up [when I was] small."</em></p>
+              <a href="https://quran.com/17/24" target="_blank">View on Quran.com</a>
+            </div>
+          </details>
+        </td>
+      </tr>
+
+      <tr class="highlight-row">
+        <td>20:114</td>
+        <td>
+          <details>
+            <summary>Prayer for Knowledge</summary>
+            <div class="content">
+              <p dir="rtl" lang="ar">رَّبِّ زِدْنِي عِلْمًا</p>
+              <p><em>"My Lord, increase me in knowledge."</em></p>
+              <a href="https://quran.com/20/114" target="_blank">View on Quran.com</a>
+            </div>
+          </details>
+        </td>
+      </tr>
+
+      <tr>
+        <td>21:87</td>
+        <td>
+          <details>
+            <summary>Prayer of Yūnus (Jonah)</summary>
+            <div class="content">
+              <p dir="rtl" lang="ar">لَّا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ</p>
+              <p><em>"There is no deity except You; exalted are You. Indeed, I have been of the wrongdoers."</em></p>
+              <a href="https://quran.com/21/87" target="_blank">View on Quran.com</a>
+            </div>
+          </details>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    const filterInput = document.getElementById('filterInput');
+    const tableRows = document.querySelectorAll('#prayerTable tbody tr');
+
+    filterInput.addEventListener('keyup', function() {
+      const query = filterInput.value.toLowerCase();
+
+      tableRows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        // If the query is found in the row text, show it; otherwise hide it.
+        row.style.display = text.includes(query) ? '' : 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>
